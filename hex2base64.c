@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 char ctoh(char);
-void toBase64(char,char,char);
+void toBase64(char,char,char, char*,int);
 
 int main(int argc, char **argv){
 	
@@ -35,6 +35,7 @@ int main(int argc, char **argv){
 	  printf("please specify an argument\n");
 	  return 0;
 	}
+    
 	//Since 3 4bit hex are equal to 2 6bit base64 we have a 2 to 3 ratio. This means we multiply the size of the hex string
 	//    by 2 and then divide it by three to calculate the size of the array we need for the base64 string, calculating for the
 	//    remainder as needed
@@ -48,10 +49,12 @@ int main(int argc, char **argv){
 		trueHex[i] = ctoh(argv[1][i]);
 		if(trueHex[i] == -1)
 			return -1;
-		printf("%.2x\n", trueHex[i]);
+		//printf("%.2x\n", trueHex[i]);
 	}
 
-	//toBase64(x,y,z);
+	toBase64(trueHex[0],trueHex[1],trueHex[2],base,0);
+
+    printf("%.2x : %.2x", base[0], base[1]);
 
 	return 0;
 }
@@ -121,13 +124,19 @@ char ctoh(char convert)
 /*
  *Method: toBase64
  *Input: 3 hex values stored as characters. We only care about the last four bits of each character i.e. 0x0F we care about F.
- *    We also have a character array passed in by reference.
+ *    We also have a character array pointer passed in. Integer denoting if padding is needed or not
  *Output: None. The values are stored in the character array that is passed by reference as a parameter
- *Purpose:
+ *Purpose: given 3 hex values we calculate the two corresponding base54 values
  */
- void toBase64(char x, char y, char z){
+ void toBase64(char x, char y, char z, char *arr, int pad){
 	 
 	char c1 = (x << 2) | ((y >> 2) & 0x3F);
 	char c2 = (y << 4)  | (z & 0x3F);
 
+    strcat(arr, &c1);
+    if(pad == 1){
+        c2 = '=';
+    }
+    
+    strcat(arr, &c2);
  }

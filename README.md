@@ -5,20 +5,21 @@ SET_1_CHALLENGE_1: HEX TO BASE64
 
   I chose to work with the char data type in C, since this allows for 8-bits. For the hex characters we only need 4-bits and for the base64 for we need 6-bits, which makes the 8-bit char optimal for the storage. For this challenge we need to use left and right bit shifts along with bitwise 'or' and 'and'. Below is an example of how the three 4-bit hex values are combined to make the two 6-bit base64 values:
   
-    0x01      0x02      0x03
-  0 0 0 1 | 0 0 1 0 | 0 1 1 0
-               |
-               v
-   0 0 0 1 0 0 | 1 0 0 1 1 0
-       0x04        0x16
+       0x01      0x02      0x03
+     0 0 0 1 | 0 0 1 0 | 0 1 1 0
+                  |
+                  v
+      0 0 0 1 0 0 | 1 0 0 1 1 0
+          0x04        0x16
       
-    Because we are working with chars, which are 8-bit, it works a little bit(ha!) diferrently: 
-         0x01             0x02              0x03
-  0 0 0 0 0 0 0 1 | 0 0 0 0 0 0 1 0 | 0 0 0 0 0 1 1 0
-                           |
-                           v
-           0 0 0 0 0 1 0 0 | 0 0 1 0 0 1 1 0
-                 0x04              0x16
+  Because we are working with chars, which are 8-bit, it works a little bit(ha!) diferrently: 
+  
+          0x01             0x02              0x03
+    0 0 0 0 0 0 0 1 | 0 0 0 0 0 0 1 0 | 0 0 0 0 0 1 1 0
+                             |
+                             v
+             0 0 0 0 0 1 0 0 | 0 0 1 0 0 1 1 0
+                   0x04              0x16
                  
 Here's how it works:
   * To get base64 character 1 we need:

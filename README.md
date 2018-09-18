@@ -35,3 +35,7 @@ Here's how it works:
   * This generates two decimal values that can be used with a corresponding base64 encoding table to find and print the corresponding           character
   
   Note how we always keep the highest bits valued at 0 (00xxxxxx) since the most bits we ever use are 6 bits.
+
+SET_1_CHALLENGE_2: FIXED XOR
+
+This one was very straight forward: Read in the hex and convert it from ascii characters to the true representation of it i.e '1234' becomes 0x12 and 0x34. After that use the bitwise xor operation on them i.e 0x12 ^ 0x34 becomes 0x26.
